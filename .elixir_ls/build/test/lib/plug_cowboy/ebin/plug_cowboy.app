@@ -1,0 +1,11 @@
+{application,plug_cowboy,
+             [{applications,[kernel,stdlib,elixir,logger,plug,cowboy,
+                             cowboy_telemetry,telemetry]},
+              {description,"A Plug adapter for Cowboy"},
+              {modules,['Elixir.Plug.Adapters.Cowboy.Conn',
+                        'Elixir.Plug.Adapters.Cowboy.Handler',
+                        'Elixir.Plug.Cowboy','Elixir.Plug.Cowboy.Application',
+                        'Elixir.Plug.Cowboy.Translator']},
+              {registered,[]},
+              {vsn,"2.4.1"},
+              {mod,{'Elixir.Plug.Cowboy',[]}}]}.

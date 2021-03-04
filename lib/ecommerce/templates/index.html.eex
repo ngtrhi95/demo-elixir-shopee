@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Apple Flagship Store</h1>
+    <div id="content">
+      Đang lấy dữ liệu...
+    </div>
+  </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $.get("/data", function(data, status){
+      if (data != null && data != undefined){
+        var res = JSON.parse(data);
+        var html = "";
+        if (res.salesProdItems != null && res.salesProdItems.length > 0){
+          var htmlSalesPrd = "<div class=row>" + "<div class=col-md-12>" + "<h3>DEAL HOT, MUA NGAY KẺO LỠ!</h3>" + "</div>";
+          $.each(res.salesProdItems, function( index, item ) {
+            htmlSalesPrd += "<div style=padding-top:10px class=col-md-4>" + "<h5>" + item.name + "</h5>";
+            htmlSalesPrd +=  (item.price/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+            htmlSalesPrd += "</div>"
+          });
+          html += htmlSalesPrd;
+          html += "</div>"
+          html += "<br>";
+        }
+
+        if (res.bestSellingProdItems != null && res.bestSellingProdItems.length > 0){
+          var htmlBestSellingPrd = "<div class=row>" + "<div class=col-md-12>" + "<h3>Sản phẩm bán chạy</h3>" + "</div>";
+          $.each(res.bestSellingProdItems, function( index, item ) {
+            htmlBestSellingPrd += "<div style=padding-top:10px class=col-md-4>" + "<h5>" + item.name + "</h5>";
+            if (item.price_min == item.price_max){
+              htmlBestSellingPrd +=  (item.price_min/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+            }
+            else {
+              htmlBestSellingPrd +=  (item.price_min/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+              + " - "
+              + (item.price_max/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+            }
+            htmlBestSellingPrd += "</div>"
+          });
+          html += htmlBestSellingPrd;
+          html += "</div>"
+          html += "<br>";
+        }
+        if (res.newestProdItems != null && res.newestProdItems.length > 0){
+          var htmlNewstPrd = "<div class=row>" + "<div class=col-md-12>" + "<h3>Sản phẩm mới</h3>" + "</div>";
+          $.each(res.newestProdItems, function( index, item ) {
+            htmlNewstPrd += "<div style=padding-top:10px class=col-md-4>" + "<h5>" + item.name + "</h5>";
+            if (item.price_min == item.price_max){
+              htmlNewstPrd += (item.price_min/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+            }
+            else {
+              htmlNewstPrd += (item.price_min/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+              + " - "
+              + (item.price_max/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+            }
+            htmlNewstPrd += "</div>"
+          });
+          html += htmlNewstPrd;
+          html += "</div>"
+          html += "<br>";
+        }
+
+        if (res.popProductItems != null && res.popProductItems.length > 0){
+          var htmlPopPrd = "<div class=row>" + "<div class=col-md-12>" + "<h3>Sản phẩm phổ biến</h3>" + "</div>";
+          $.each(res.popProductItems, function( index, item ) {
+            htmlPopPrd += "<div style=padding-top:10px class=col-md-4>" + "<h5>" + item.name + "</h5>";
+            htmlPopPrd += (item.price/100000).toLocaleString('en-US', {style : 'currency', currency : 'VND'})
+            htmlPopPrd += "</div>"
+          });
+          html += htmlPopPrd;
+          html += "</div>"
+          html += "<br>";
+        }
+
+        $("#content").replaceWith(html);
+      }
+    });
+  });
+</script>
+</html>
