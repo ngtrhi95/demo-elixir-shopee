@@ -5,7 +5,7 @@ defmodule Ecommerce.MixProject do
     [
       app: :ecommerce,
       version: "0.1.0",
-      elixir: "~> 1.11",
+      elixir: "~> 1.11.2",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -22,6 +22,7 @@ defmodule Ecommerce.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:phoenix, "~> 1.3.0"},
       {:plug, "~> 1.4"},
       {:cowboy, "~> 1.1"},
       {:plug_cowboy, "~> 1.0"},
